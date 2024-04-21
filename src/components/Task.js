@@ -1,6 +1,6 @@
 import React from 'react';
 import { filter, includes, orderBy as funcOrderBy, remove, reject } from 'lodash';
-import { taskData } from '../mocks/task'
+import { taskData } from '../mocks/taskData'
 import { v4 as uuidv4 } from 'uuid';
 
 class TaskList extends React.Component {
@@ -241,46 +241,52 @@ class TaskList extends React.Component {
       <div>
         {this.state.showForm && ( // Show the form only when showForm is true
           <form onSubmit={this.handleAdd}>
-            <div>
+          <div className="form-row">
+            <div className="col">
               <label>Title:</label>
               <input
                 type="text"
                 name="title"
+                className="form-control"
                 value={this.state.newTask.title}
                 onChange={this.handleInputChange}
                 required
               />
             </div>
-            <div>
+            <div className="col">
               <label>Description:</label>
               <input
                 type="text"
                 name="description"
+                className="form-control"
                 value={this.state.newTask.description}
                 onChange={this.handleInputChange}
                 required
               />
             </div>
-            <div>
-              <label>Expiry Date:</label>
-              <input
-                type="date"
-                name="expiryDate"
-                value={this.state.newTask.expiryDate}
-                onChange={this.handleInputChange}
-                required
-              />
-            </div>
-            <button class="btn btn-outline-primary">Add Task</button>
-          </form>
+          </div>
+          <div className="form-group">
+            <label>Expiry Date:</label>
+            <input
+              type="date"
+              name="expiryDate"
+              className="form-control"
+              value={this.state.newTask.expiryDate}
+              onChange={this.handleInputChange}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Add Task</button>
+          <button type="button" className="btn btn-secondary" onClick={this.toggleForm}>Cancel</button>
+        </form>
         )}
         <form onSubmit={this.handleFormSubmit}>
           <table className="table table-hover table-responsive-lg">
             <thead>
               <tr>
-                <th style={{ width: "15%" }} className="text-center">Title</th>
-                <th style={{ width: "35%" }} className="text-center">Description</th>
-                <td style={{ width: "15%" }} className="text-center">
+                <th style={{ width: "13%" }} className="text-center">Title</th>
+                <th style={{ width: "32%" }} className="text-center">Description</th>
+                <td style={{ width: "20%" }} className="text-center">
                   <select className="form-select" value={this.state.filterStatus} onChange={(e) => this.handleFilterChange(e.target.value)}>
                     <option value="all">Status</option>
                     <option value="1">Open</option>

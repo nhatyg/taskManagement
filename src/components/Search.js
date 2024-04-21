@@ -1,6 +1,6 @@
 import React from 'react';
 import { filter, includes, orderBy as funcOrderBy, remove, reject } from 'lodash';
-import { taskData } from '../mocks/task';
+import { taskData } from '../mocks/taskData';
 
 class Search extends React.Component {
   constructor(props) {
