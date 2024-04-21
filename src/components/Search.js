@@ -1,6 +1,7 @@
 import React from 'react';
-import { filter, includes, orderBy as funcOrderBy, remove, reject } from 'lodash';
+import { filter, includes, orderBy as funcOrderBy, remove, reject, isDate } from 'lodash';
 import { taskData } from '../mocks/taskData';
+const currentDate = new Date().toISOString().split('T')[0];
 
 class Search extends React.Component {
   constructor(props) {
@@ -78,17 +79,29 @@ class Search extends React.Component {
   }
 
   renderDetail() {
+    const { task } = this.state;
     return (
-      <div>
-        <div>Detail</div>
-        <div>Title: {this.state.task.title}</div>
-        <div>Description: <span>{this.state.task.description}</span></div>
-        <div>Status:
-          <span style={{ color: this.state.task.status === 1 ? 'blue' : this.state.task.status === 2 ? 'purple' : 'green' }}>
-            {this.state.task.status === 1 ? 'Open' : this.state.task.status === 2 ? 'In Progress' : 'Closed'}
-          </span></div>
-        <div>Expiry Date: {this.state.task.expiryDate}</div>
-        {/* <div>{(Number(this.state.task.java)+ Number(this.state.task.fe) + Number(this.state.task.React))/3}</div> */}
+      <div className="task-detail">
+        <div className="task-title">Detail</div>
+        <div className="task-field">
+          <div className="task-label">Title:</div>
+          <div className="task-value">{task.title}</div>
+        </div>
+        <div className="task-field">
+          <div className="task-label">Description:</div>
+          <div className="task-value">{task.description}</div>
+        </div>
+        <div className="task-field">
+          <div className="task-label">Status:</div>
+          <div className="task-value" style={{ color: task.status === 1 ? 'blue' : task.status === 2 ? 'purple' : 'green' }}>
+            {task.status === 1 ? 'Open' : task.status === 2 ? 'In Progress' : 'Closed'}
+          </div>
+        </div>
+        <div className="task-field">
+          <div className="task-label">Expiry Date:</div>
+          <div className="task-value">{task.expiryDate}</div>
+        </div>
+        <div className="task-task">{task.status === 3 ? 'Task đã hoàn thành' : task.status === 2 && task.expiryDate >= currentDate ? 'Task đang thực hiện' : task.status === 1 && task.expiryDate >= currentDate ? 'Task chưa bắt đầu' : 'Task trễ hạn'}</div>
       </div>
     )
   }
@@ -113,9 +126,10 @@ class Search extends React.Component {
           </thead>
           <tbody>
             {this.renderItems()}
-            {this.state.task && this.state.task.title && this.renderDetail()}
+
           </tbody>
         </table>
+        {this.state.task && this.state.task.title && this.renderDetail()}
         {this.renderPagination()}
       </div>
     );

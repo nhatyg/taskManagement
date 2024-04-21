@@ -212,14 +212,14 @@ class TaskList extends React.Component {
               <tr>
                 <th style={{ width: "13%" }} className="text-center">Title</th>
                 <th style={{ width: "32%" }} className="text-center">Description</th>
-                <td style={{ width: "20%" }} className="text-center">
+                <th style={{ width: "20%" }} className="text-center">
                   <select className="form-select" value={this.state.filterStatus} onChange={(e) => this.handleFilterChange(e.target.value)}>
                     <option value="all">Status</option>
                     <option value="1">Open</option>
                     <option value="2">In Progress</option>
                     <option value="3">Closed</option>
                   </select>
-                </td>
+                </th>
                 <th style={{ width: "15%" }} className="text-center">Expiry Date</th>
                 <th style={{ width: "25%" }} >Action</th>
               </tr>
