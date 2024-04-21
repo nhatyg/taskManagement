@@ -18,7 +18,9 @@ class TaskList extends React.Component {
       },
       editingTask: null,
       showForm: false,
-      filterStatus: 'all'
+      filterStatus: 'all',
+      currentPage: 1,
+      tasksPerPage: 3
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -27,6 +29,7 @@ class TaskList extends React.Component {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
 
@@ -111,6 +114,10 @@ class TaskList extends React.Component {
     });
   }
 
+  handlePageChange(page) {
+    this.setState({ currentPage: page });
+  }
+
   renderItem() {
     const { filterStatus } = this.state;
     const filteredTasks = this.state.tasks.filter(task => {
@@ -185,6 +192,17 @@ class TaskList extends React.Component {
   }
 
   render() {
+    const { filterStatus, currentPage, tasksPerPage } = this.state;
+    const filteredTasks = this.state.tasks.filter(task => {
+      if (filterStatus === 'all') {
+        return true;
+      }
+      return task.status.toString() === filterStatus;
+    });
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+    const currentTasks = filteredTasks.slice(indexOfFirstTask, indexOfLastTask);
+
     return (
       <div>
         {this.state.showForm && ( // Show the form only when showForm is true
@@ -242,9 +260,75 @@ class TaskList extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {this.renderItem()}
+              {currentTasks.map((item, index) => {
+                if (this.state.editingTask && this.state.editingTask.id === item.id) {
+                  return (
+                    <tr key={item.id}>
+                      <td>{item.id}</td>
+                      <td>
+                        <input
+                          type="text"
+                          name="title"
+                          value={this.state.editingTask.title}
+                          onChange={this.handleInputChange}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          name="description"
+                          value={this.state.editingTask.description}
+                          onChange={this.handleInputChange}
+                        />
+                      </td>
+                      <td>
+                        <select
+                          name="status"
+                          value={this.state.editingTask.status}
+                          onChange={this.handleInputChange}
+                        >
+                          <option value={1}>Open</option>
+                          <option value={2}>In Progress</option>
+                          <option value={3}>Closed</option>
+                        </select>
+                      </td>
+                      <td>
+                        <input
+                          type="date"
+                          name="expiryDate"
+                          value={this.state.editingTask.expiryDate}
+                          onChange={this.handleInputChange}
+                        />
+                      </td>
+                      <td>
+                        <button class="btn btn-outline-success" onClick={this.handleFormSubmit}>Save</button>
+                      </td>
+                    </tr>
+                  );
+                }
+                return (
+                  <tr key={item.id}>
+                    <td>{item.id}</td>
+                    <td>{item.title}</td>
+                    <td>{item.description}</td>
+                    <td><span style={{ color: item.status === 1 ? 'blue' : item.status === 2 ? 'purple' : 'green' }}>
+                      {item.status === 1 ? 'Open' : item.status === 2 ? 'In Progress' : 'Closed'}
+                    </span></td>
+                    <td>{item.expiryDate}</td>
+                    <td>
+                      <button type="button" class="btn btn-outline-danger" onClick={() => this.handleDelete(item.id)}>Delete</button>
+                      <button type="button" class="btn btn-outline-success" onClick={() => this.handleEdit(item)}>Edit</button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+          <div className="pagination">
+            <button className="btn btn-outline-primary" onClick={() => this.handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+            <span>Page {currentPage} of {Math.ceil(filteredTasks.length / tasksPerPage)}</span>
+            <button className="btn btn-outline-primary" onClick={() => this.handlePageChange(currentPage + 1)} disabled={currentPage === Math.ceil(filteredTasks.length / tasksPerPage)}>Next</button>
+          </div>
           <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm}>New Task</button>
         </form>
       </div>

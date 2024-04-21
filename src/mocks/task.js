@@ -24,7 +24,7 @@ export const taskData = [
     id: 4,
     title: "Detail Design",
     description: "Create ERD for FR1...",
-    status: 1,
+    status: 2,
     expiryDate: "2024-01-21"
   },
   {
@@ -34,5 +34,26 @@ export const taskData = [
     description: "Coding for get request definition API...",
     status: 1,
     expiryDate: "2024-01-28"
+  },
+  {
+    id: 6,
+    title: "PCL",
+    description: "Create testcase for UT manual...",
+    status: 1,
+    expiryDate: "2024-02-03"
+  },
+  {
+    id: 7,
+    title: "UT manual",
+    description: "Get EVD UT manual for anken 1813...",
+    status: 1,
+    expiryDate: "2024-02-10"
+  },
+  {
+    id: 8,
+    title: "Testscript",
+    description: "Coverage source code anken 1813...",
+    status: 1,
+    expiryDate: "2024-02-17"
   }
 ];

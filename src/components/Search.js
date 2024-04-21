@@ -77,8 +77,8 @@ class Search extends React.Component {
           <thead>
             <tr>
               <th style={{ width: "10%" }} className="text-center">#</th>
-              <th style={{ width: "10%" }} className="text-center">Title</th>
-              <th style={{ width: "10%" }} className="text-center">Description</th>
+              <th style={{ width: "20%" }} className="text-center">Title</th>
+              <th style={{ width: "30%" }} className="text-center">Description</th>
               <th style={{ width: "15%" }} >Detail</th>
             </tr>
           </thead>
