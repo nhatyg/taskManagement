@@ -17,7 +17,8 @@ class TaskList extends React.Component {
         expiryDate: ''
       },
       editingTask: null,
-      showForm: false
+      showForm: false,
+      filterStatus: 'all'
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -25,6 +26,7 @@ class TaskList extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
   }
 
 
@@ -88,7 +90,8 @@ class TaskList extends React.Component {
 
   handleFormSubmit(event) {
     event.preventDefault();
-    if (this.state.editingTask.id) {
+    if (this.state.editingTask) {
+      // Nếu có task đang được sửa, cập nhật thông tin task đó
       const updatedTasks = this.state.tasks.map(task => {
         if (task.id === this.state.editingTask.id) {
           return this.state.editingTask;
@@ -99,17 +102,25 @@ class TaskList extends React.Component {
         tasks: updatedTasks,
         editingTask: null
       });
-    } else {
-      this.setState({
-        tasks: [...this.state.tasks, this.state.editingTask],
-        editingTask: null
-      });
     }
   }
 
+  handleFilterChange(filterStatus) {
+    this.setState({
+      filterStatus: filterStatus
+    });
+  }
 
   renderItem() {
-    return this.state.tasks.map((item, index) => {
+    const { filterStatus } = this.state;
+    const filteredTasks = this.state.tasks.filter(task => {
+      if (filterStatus === 'all') {
+        return true;
+      }
+      return task.status.toString() === filterStatus;
+    });
+
+    return filteredTasks.map((item, index) => {
       if (this.state.editingTask && this.state.editingTask.id === item.id) {
         return (
           <tr key={item.id}>
@@ -212,6 +223,13 @@ class TaskList extends React.Component {
           </form>
         )}
         <form onSubmit={this.handleFormSubmit}>
+          <div>
+            {/* ... code hiển thị các nút lọc */}
+            <button onClick={() => this.handleFilterChange('all')}>All</button>
+            <button onClick={() => this.handleFilterChange('1')}>Open</button>
+            <button onClick={() => this.handleFilterChange('2')}>In Progress</button>
+            <button onClick={() => this.handleFilterChange('3')}>Closed</button>
+          </div>
           <table className="table table-hover table-responsive-lg">
             <thead>
               <tr>
