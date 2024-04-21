@@ -47,7 +47,7 @@ class TaskList extends React.Component {
         <tbody>
           <tr>
             <td>
-              <button type="button" className="btn btn-outline-success" onClick={this.handleDelete}>
+              <button type="button" className="btn btn-outline-primary" onClick={this.handleDelete}>
                 New Task
               </button>
             </td>

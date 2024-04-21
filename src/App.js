@@ -29,7 +29,7 @@ function App() {
         <div
           style={{
             padding: "10px",
-            width: "40%",
+            width: "20%",
           }}
         >
           <ul style={{ listStyleType: "none", padding: 0 }}>
