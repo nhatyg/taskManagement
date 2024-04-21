@@ -1,6 +1,6 @@
 import React from 'react';
 import { filter, includes, orderBy as funcOrderBy, remove, reject } from 'lodash';
-import { taskData } from '../mocks/task'
+import { taskData } from '../mocks/task';
 
 class Search extends React.Component {
   constructor(props) {
@@ -9,43 +9,72 @@ class Search extends React.Component {
     this.state = {
       tasks: taskData,
       searchTasks: taskData,
-      task: {}
-    }
+      task: {},
+      currentPage: 1,
+      tasksPerPage: 5 // Số lượng phần tử trên mỗi trang
+    };
   }
 
   onChange = (e) => {
-    let data = this.state.searchTasks.filter(item => item.title.indexOf(e.target.value) > -1 || item.description.indexOf(e.target.value) > -1);
-    console.log(data)
-    if (!e.target.value) {
-      this.setState({
-        searchTasks: this.state.tasks
-      })
-    } else {
-      this.setState({
-        searchTasks: data
-      })
-    }
-
+    this.setState({
+      searchTasks: this.state.tasks.filter(item =>
+        item.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+        item.description.toLowerCase().includes(e.target.value.toLowerCase())
+      ),
+      currentPage: 1 // Reset về trang đầu khi tìm kiếm
+    });
   }
 
   showDetail = (item) => {
-    this.setState({ task: item })
+    this.setState({ task: item });
   }
 
-  renderItem = () => {
-    const elmItem = this.state.searchTasks.map((item, index) => {
-      return (
-        <tr className={item.complete === 1 ? "line-click" : ""}>
-          <td>{item.id}</td>
-          <td>{item.title}</td>
-          <td>{item.description}</td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm" onClick={() => this.showDetail(item)}>View</button>
-          </td>
-        </tr>
-      )
-    });
-    return elmItem
+  renderItems = () => {
+    const { searchTasks, currentPage, tasksPerPage } = this.state;
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+    const currentTasks = searchTasks.slice(indexOfFirstTask, indexOfLastTask);
+
+    return currentTasks.map((item, index) => (
+      <tr key={item.id} className={item.complete === 1 ? "line-click" : ""}>
+        <td>{item.id}</td>
+        <td>{item.title}</td>
+        <td>{item.description}</td>
+        <td>
+          <button type="button" className="btn btn-primary btn-sm" onClick={() => this.showDetail(item)}>View</button>
+        </td>
+      </tr>
+    ));
+  }
+
+  // Phương thức để chuyển đến trang khác
+  handlePageChange = (pageNumber) => {
+    this.setState({ currentPage: pageNumber });
+  }
+
+  renderPagination = () => {
+    const { searchTasks, tasksPerPage } = this.state;
+    const pageNumbers = Math.ceil(searchTasks.length / tasksPerPage);
+
+    return (
+      <nav>
+        <ul className="pagination">
+          <li className={`page-item ${this.state.currentPage === 1 ? 'disabled' : ''}`}>
+            <a className="page-link" href="#" onClick={() => this.handlePageChange(this.state.currentPage - 1)}>Previous</a>
+          </li>
+          {Array.from({ length: pageNumbers }, (_, index) => (
+            <li key={index} className={this.state.currentPage === index + 1 ? "page-item active" : "page-item"}>
+              <a className="page-link" onClick={() => this.handlePageChange(index + 1)}>
+                {index + 1}
+              </a>
+            </li>
+          ))}
+          <li className={`page-item ${this.state.currentPage === pageNumbers.length ? 'disabled' : ''}`}>
+            <a className="page-link" href="#" onClick={() => this.handlePageChange(this.state.currentPage + 1)}>Next</a>
+          </li>
+        </ul>
+      </nav>
+    );
   }
 
   renderDetail() {
@@ -63,14 +92,14 @@ class Search extends React.Component {
       </div>
     )
   }
+
   render() {
     return (
       <div>
-
-        <nav class="navbar navbar-light bg-light">
-          <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => this.onChange(e)} />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <nav className="navbar navbar-light bg-light">
+          <form className="form-inline">
+            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => this.onChange(e)} />
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </nav>
         <table className="table table-hover table-responsive-lg">
@@ -83,13 +112,13 @@ class Search extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.renderItem()}
+            {this.renderItems()}
             {this.state.task && this.state.task.title && this.renderDetail()}
           </tbody>
         </table>
+        {this.renderPagination()}
       </div>
-    )
-
+    );
   }
 }
 
