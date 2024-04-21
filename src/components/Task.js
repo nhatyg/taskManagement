@@ -1,5 +1,4 @@
 import React from 'react';
-import { filter, includes, orderBy as funcOrderBy, remove, reject } from 'lodash';
 import { taskData } from '../mocks/taskData'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -152,79 +151,6 @@ class TaskList extends React.Component {
     );
   }
 
-  renderItem() {
-    const { filterStatus } = this.state;
-    const filteredTasks = this.state.tasks.filter(task => {
-      if (filterStatus === 'all') {
-        return true;
-      }
-      return task.status.toString() === filterStatus;
-    });
-
-    return filteredTasks.map((item, index) => {
-      if (this.state.editingTask && this.state.editingTask.id === item.id) {
-        return (
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>
-              <input
-                type="text"
-                name="title"
-                value={this.state.editingTask.title}
-                onChange={this.handleInputChange}
-              />
-            </td>
-            <td>
-              <input
-                type="text"
-                name="description"
-                value={this.state.editingTask.description}
-                onChange={this.handleInputChange}
-              />
-            </td>
-            <td>
-              <select
-                name="status"
-                value={this.state.editingTask.status}
-                onChange={this.handleInputChange}
-              >
-                <option value={1}>Open</option>
-                <option value={2}>In Progress</option>
-                <option value={3}>Closed</option>
-              </select>
-            </td>
-            <td>
-              <input
-                type="date"
-                name="expiryDate"
-                value={this.state.editingTask.expiryDate}
-                onChange={this.handleInputChange}
-              />
-            </td>
-            <td>
-              <button class="btn btn-outline-success" onClick={this.handleFormSubmit}>Save</button>
-            </td>
-          </tr>
-        );
-      }
-      return (
-        <tr key={item.id}>
-          <td>{item.id}</td>
-          <td>{item.title}</td>
-          <td>{item.description}</td>
-          <td><span style={{ color: item.status === 1 ? 'blue' : item.status === 2 ? 'purple' : 'green' }}>
-            {item.status === 1 ? 'Open' : item.status === 2 ? 'In Progress' : 'Closed'}
-          </span></td>
-          <td>{item.expiryDate}</td>
-          <td>
-            <button type="button" class="btn btn-outline-danger" onClick={() => this.handleDelete(item.id)}>Delete</button>
-            <button type="button" class="btn btn-outline-success" onClick={() => this.handleEdit(item)}>Edit</button>
-          </td>
-        </tr>
-      );
-    });
-  }
-
   render() {
     const { filterStatus, currentPage, tasksPerPage } = this.state;
     const filteredTasks = this.state.tasks.filter(task => {
@@ -348,8 +274,8 @@ class TaskList extends React.Component {
                   <tr key={item.id}>
                     <td>{item.title}</td>
                     <td>{item.description}</td>
-                    <td><span style={{ color: item.status === 1 ? 'blue' : item.status === 2 ? 'purple' : 'green' }}>
-                      {item.status === 1 ? 'Open' : item.status === 2 ? 'In Progress' : 'Closed'}
+                    <td><span style={{ color: item.status == 1 ? 'blue' : item.status == 2 ? 'purple' : 'green' }}>
+                      {item.status == 1 ? 'Open' : item.status == 2 ? 'In Progress' : 'Closed'}
                     </span></td>
                     <td>{item.expiryDate}</td>
                     <td>
