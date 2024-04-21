@@ -20,7 +20,7 @@ class TaskList extends React.Component {
       showForm: false,
       filterStatus: 'all',
       currentPage: 1,
-      tasksPerPage: 3
+      tasksPerPage: 5
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
@@ -116,6 +116,40 @@ class TaskList extends React.Component {
 
   handlePageChange(page) {
     this.setState({ currentPage: page });
+  }
+
+  renderPagination() {
+    const { filterStatus, currentPage, tasksPerPage } = this.state;
+    const filteredTasks = this.state.tasks.filter(task => {
+      if (filterStatus === 'all') {
+        return true;
+      }
+      return task.status.toString() === filterStatus;
+    });
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(filteredTasks.length / tasksPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    return (
+      <nav>
+        <ul className="pagination">
+          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+            <a className="page-link" href="#" onClick={() => this.handlePageChange(currentPage - 1)}>Previous</a>
+          </li>
+          {pageNumbers.map(number => (
+            <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
+              <a className="page-link" href="#" onClick={() => this.handlePageChange(number)}>
+                {number}
+              </a>
+            </li>
+          ))}
+          <li className={`page-item ${currentPage === pageNumbers.length ? 'disabled' : ''}`}>
+            <a className="page-link" href="#" onClick={() => this.handlePageChange(currentPage + 1)}>Next</a>
+          </li>
+        </ul>
+      </nav>
+    );
   }
 
   renderItem() {
@@ -325,9 +359,7 @@ class TaskList extends React.Component {
             </tbody>
           </table>
           <div className="pagination">
-            <button className="btn btn-outline-primary" onClick={() => this.handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-            <span>Page {currentPage} of {Math.ceil(filteredTasks.length / tasksPerPage)}</span>
-            <button className="btn btn-outline-primary" onClick={() => this.handlePageChange(currentPage + 1)} disabled={currentPage === Math.ceil(filteredTasks.length / tasksPerPage)}>Next</button>
+            {this.renderPagination()}
           </div>
           <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm}>New Task</button>
         </form>

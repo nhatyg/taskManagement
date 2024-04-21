@@ -55,5 +55,26 @@ export const taskData = [
     description: "Coverage source code anken 1813...",
     status: 1,
     expiryDate: "2024-02-17"
+  },
+  {
+    id: 9,
+    title: "QDT",
+    description: "Create testcase for anken 1813...",
+    status: 3,
+    expiryDate: "2024-01-23"
+  },
+  {
+    id: 10,
+    title: "CCL",
+    description: "Create CCL for anken 1813...",
+    status: 2,
+    expiryDate: "2024-01-30"
+  },
+  {
+    id: 11,
+    title: "CTE",
+    description: "Confirm and get EVD testcase anken 1813...",
+    status: 1,
+    expiryDate: "2024-02-17"
   }
 ];
