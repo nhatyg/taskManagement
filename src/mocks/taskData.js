@@ -47,14 +47,14 @@ export const taskData = [
     title: "UT manual",
     description: "Get EVD UT manual for anken 1813...",
     status: 1,
-    expiryDate: "2024-02-10"
+    expiryDate: "2024-05-10"
   },
   {
     id: 8,
     title: "Testscript",
     description: "Coverage source code anken 1813...",
     status: 1,
-    expiryDate: "2024-02-17"
+    expiryDate: "2024-05-17"
   },
   {
     id: 9,
