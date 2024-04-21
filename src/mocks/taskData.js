@@ -75,6 +75,6 @@ export const taskData = [
     title: "CTE",
     description: "Confirm and get EVD testcase anken 1813...",
     status: 1,
-    expiryDate: "2024-02-17"
+    expiryDate: "2024-05-17"
   }
 ];
