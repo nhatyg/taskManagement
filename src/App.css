@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -66,6 +67,44 @@
   /* animate the transition */
   transition: all 0.5s ease-in-out;
 }
+
+.task-detail {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+.task-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.task-field {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.task-label {
+  width: 150px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.task-task {
+  width: 250px;
+  font-weight: unset;
+  text-align: left;
+  font-size: 20px;
+}
+
+.task-value {
+  text-align: left;
+  flex: 1;
+}
+
 /* display .overlay when it has the .active class */
 .overlay.active {
   display: block;
