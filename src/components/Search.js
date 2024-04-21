@@ -54,9 +54,10 @@ class Search extends React.Component {
         <div>Detail</div>
         <div>Title: {this.state.task.title}</div>
         <div>Description: <span>{this.state.task.description}</span></div>
-        <div>Status: <span style={{ color: this.state.task.status ? 'green' : 'red' }}>
-          {this.state.task.status ? 'Finished' : 'Unfinished'}
-        </span></div>
+        <div>Status:
+          <span style={{ color: this.state.task.status === 1 ? 'blue' : this.state.task.status === 2 ? 'purple' : 'green' }}>
+            {this.state.task.status === 1 ? 'Open' : this.state.task.status === 2 ? 'In Progress' : 'Closed'}
+          </span></div>
         <div>Expiry Date: {this.state.task.expiryDate}</div>
         {/* <div>{(Number(this.state.task.java)+ Number(this.state.task.fe) + Number(this.state.task.React))/3}</div> */}
       </div>
