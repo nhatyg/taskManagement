@@ -99,7 +99,7 @@ class Search extends React.Component {
         <nav className="navbar navbar-light bg-light">
           <form className="form-inline">
             <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={(e) => this.onChange(e)} />
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Clear</button>
           </form>
         </nav>
         <table className="table table-hover table-responsive-lg">

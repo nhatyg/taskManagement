@@ -278,10 +278,9 @@ class TaskList extends React.Component {
           <table className="table table-hover table-responsive-lg">
             <thead>
               <tr>
-                <th style={{ width: "5%" }} className="text-center">#</th>
-                <th style={{ width: "10%" }} className="text-center">Title</th>
-                <th style={{ width: "30%" }} className="text-center">Description</th>
-                <td style={{ width: "10%" }} className="text-center">
+                <th style={{ width: "15%" }} className="text-center">Title</th>
+                <th style={{ width: "35%" }} className="text-center">Description</th>
+                <td style={{ width: "15%" }} className="text-center">
                   <select className="form-select" value={this.state.filterStatus} onChange={(e) => this.handleFilterChange(e.target.value)}>
                     <option value="all">Status</option>
                     <option value="1">Open</option>
@@ -290,7 +289,7 @@ class TaskList extends React.Component {
                   </select>
                 </td>
                 <th style={{ width: "15%" }} className="text-center">Expiry Date</th>
-                <th style={{ width: "30%" }} >Action</th>
+                <th style={{ width: "25%" }} >Action</th>
               </tr>
             </thead>
             <tbody>
@@ -298,7 +297,6 @@ class TaskList extends React.Component {
                 if (this.state.editingTask && this.state.editingTask.id === item.id) {
                   return (
                     <tr key={item.id}>
-                      <td>{item.id}</td>
                       <td>
                         <input
                           type="text"
@@ -342,7 +340,6 @@ class TaskList extends React.Component {
                 }
                 return (
                   <tr key={item.id}>
-                    <td>{item.id}</td>
                     <td>{item.title}</td>
                     <td>{item.description}</td>
                     <td><span style={{ color: item.status === 1 ? 'blue' : item.status === 2 ? 'purple' : 'green' }}>
