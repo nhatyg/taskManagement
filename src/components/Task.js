@@ -150,7 +150,7 @@ class TaskList extends React.Component {
               />
             </td>
             <td>
-              <button type="submit" onClick={this.handleFormSubmit}>Save</button>
+              <button class="btn btn-outline-success" onClick={this.handleFormSubmit}>Save</button>
             </td>
           </tr>
         );
