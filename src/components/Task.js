@@ -241,44 +241,44 @@ class TaskList extends React.Component {
       <div>
         {this.state.showForm && ( // Show the form only when showForm is true
           <form onSubmit={this.handleAdd}>
-          <div className="form-row">
-            <div className="col">
-              <label>Title:</label>
+            <div className="form-row">
+              <div className="col">
+                <label>Title:</label>
+                <input
+                  type="text"
+                  name="title"
+                  className="form-control"
+                  value={this.state.newTask.title}
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </div>
+              <div className="col">
+                <label>Description:</label>
+                <input
+                  type="text"
+                  name="description"
+                  className="form-control"
+                  value={this.state.newTask.description}
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Expiry Date:</label>
               <input
-                type="text"
-                name="title"
+                type="date"
+                name="expiryDate"
                 className="form-control"
-                value={this.state.newTask.title}
+                value={this.state.newTask.expiryDate}
                 onChange={this.handleInputChange}
                 required
               />
             </div>
-            <div className="col">
-              <label>Description:</label>
-              <input
-                type="text"
-                name="description"
-                className="form-control"
-                value={this.state.newTask.description}
-                onChange={this.handleInputChange}
-                required
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label>Expiry Date:</label>
-            <input
-              type="date"
-              name="expiryDate"
-              className="form-control"
-              value={this.state.newTask.expiryDate}
-              onChange={this.handleInputChange}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">Add Task</button>
-          <button type="button" className="btn btn-secondary" onClick={this.toggleForm}>Cancel</button>
-        </form>
+            <button type="submit" className="btn btn-primary">Add Task</button>
+            <button type="button" className="btn btn-secondary" onClick={this.toggleForm}>Cancel</button>
+          </form>
         )}
         <form onSubmit={this.handleFormSubmit}>
           <table className="table table-hover table-responsive-lg">
