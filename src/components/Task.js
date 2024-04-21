@@ -223,20 +223,20 @@ class TaskList extends React.Component {
           </form>
         )}
         <form onSubmit={this.handleFormSubmit}>
-          <div>
-            {/* ... code hiển thị các nút lọc */}
-            <button onClick={() => this.handleFilterChange('all')}>All</button>
-            <button onClick={() => this.handleFilterChange('1')}>Open</button>
-            <button onClick={() => this.handleFilterChange('2')}>In Progress</button>
-            <button onClick={() => this.handleFilterChange('3')}>Closed</button>
-          </div>
           <table className="table table-hover table-responsive-lg">
             <thead>
               <tr>
                 <th style={{ width: "5%" }} className="text-center">#</th>
                 <th style={{ width: "10%" }} className="text-center">Title</th>
                 <th style={{ width: "30%" }} className="text-center">Description</th>
-                <th style={{ width: "10%" }} className="text-center">Status</th>
+                <td style={{ width: "10%" }} className="text-center">
+                  <select className="form-select" value={this.state.filterStatus} onChange={(e) => this.handleFilterChange(e.target.value)}>
+                    <option value="all">Status</option>
+                    <option value="1">Open</option>
+                    <option value="2">In Progress</option>
+                    <option value="3">Closed</option>
+                  </select>
+                </td>
                 <th style={{ width: "15%" }} className="text-center">Expiry Date</th>
                 <th style={{ width: "30%" }} >Action</th>
               </tr>

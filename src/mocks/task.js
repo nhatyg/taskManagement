@@ -16,14 +16,14 @@ export const taskData = [
   {
     id: 3,
     title: "Basic Design",
-    description: "Create BD anken 1813...",
+    description: "Create invest for FR1...",
     status: 2,
     expiryDate: "2024-01-14"
   },
   {
     id: 4,
     title: "Detail Design",
-    description: "Create DD anken 1813...",
+    description: "Create ERD for FR1...",
     status: 1,
     expiryDate: "2024-01-21"
   },
@@ -31,7 +31,7 @@ export const taskData = [
 
     id: 5,
     title: "Coding",
-    description: "Coding anken 1813...",
+    description: "Coding for get request definition API...",
     status: 1,
     expiryDate: "2024-01-28"
   }
