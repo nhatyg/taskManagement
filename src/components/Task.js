@@ -287,10 +287,11 @@ class TaskList extends React.Component {
               })}
             </tbody>
           </table>
+          <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm} style={{marginLeft: '970px'}}>New Task</button>
           <div className="pagination">
             {this.renderPagination()}
           </div>
-          <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm}>New Task</button>
+          
         </form>
       </div>
     );
