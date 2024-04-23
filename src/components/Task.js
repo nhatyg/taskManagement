@@ -13,7 +13,8 @@ class TaskList extends React.Component {
         title: '',
         description: '',
         status: 1,
-        expiryDate: ''
+        startDate: '',
+        endDate: ''
       },
       editingTask: null,
       showForm: false,
@@ -60,7 +61,8 @@ class TaskList extends React.Component {
         title: '',
         description: '',
         status: 1,
-        expiryDate: ''
+        startDate: '',
+        endDate: ''
       }
     }));
   }
@@ -191,16 +193,29 @@ class TaskList extends React.Component {
                 />
               </div>
             </div>
-            <div className="form-group">
-              <label>Expiry Date:</label>
-              <input
-                type="date"
-                name="expiryDate"
-                className="form-control"
-                value={this.state.newTask.expiryDate}
-                onChange={this.handleInputChange}
-                required
-              />
+            <div className="form-row">
+              <div className="col">
+                <label>Start Date:</label>
+                <input
+                  type="date"
+                  name="startDate"
+                  className="form-control"
+                  value={this.state.newTask.startDate}
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </div>
+              <div className="col">
+                <label>End Date:</label>
+                <input
+                  type="date"
+                  name="endDate"
+                  className="form-control"
+                  value={this.state.newTask.endDate}
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </div>
             </div>
             <button type="submit" className="btn btn-primary">Add Task</button>
             <button type="button" className="btn btn-secondary" onClick={this.toggleForm}>Cancel</button>
@@ -210,9 +225,9 @@ class TaskList extends React.Component {
           <table className="table table-hover table-responsive-lg">
             <thead>
               <tr>
-                <th style={{ width: "13%" }} className="text-center">Title</th>
-                <th style={{ width: "32%" }} className="text-center">Description</th>
-                <th style={{ width: "20%" }} className="text-center">
+                <th style={{ width: "10%" }} className="text-center">Title</th>
+                <th style={{ width: "30%" }} className="text-center">Description</th>
+                <th style={{ width: "17%" }} className="text-center">
                   <select className="form-select" value={this.state.filterStatus} onChange={(e) => this.handleFilterChange(e.target.value)}>
                     <option value="all">Status</option>
                     <option value="1">Open</option>
@@ -220,7 +235,8 @@ class TaskList extends React.Component {
                     <option value="3">Closed</option>
                   </select>
                 </th>
-                <th style={{ width: "15%" }} className="text-center">Expiry Date</th>
+                <th style={{ width: "12%" }} className="text-center">Start Date</th>
+                <th style={{ width: "12%" }} className="text-center">End Date</th>
                 <th style={{ width: "25%" }} >Action</th>
               </tr>
             </thead>
@@ -259,8 +275,16 @@ class TaskList extends React.Component {
                       <td>
                         <input
                           type="date"
-                          name="expiryDate"
-                          value={this.state.editingTask.expiryDate}
+                          name="startDate"
+                          value={this.state.editingTask.startDate}
+                          onChange={this.handleInputChange}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="date"
+                          name="endDate"
+                          value={this.state.editingTask.endDate}
                           onChange={this.handleInputChange}
                         />
                       </td>
@@ -277,7 +301,8 @@ class TaskList extends React.Component {
                     <td><span style={{ color: item.status == 1 ? 'blue' : item.status == 2 ? 'purple' : 'green' }}>
                       {item.status == 1 ? 'Open' : item.status == 2 ? 'In Progress' : 'Closed'}
                     </span></td>
-                    <td>{item.expiryDate}</td>
+                    <td>{item.startDate}</td>
+                    <td>{item.endDate}</td>
                     <td>
                       <button type="button" class="btn btn-outline-danger" onClick={() => this.handleDelete(item.id)}>Delete</button>
                       <button type="button" class="btn btn-outline-success" onClick={() => this.handleEdit(item)}>Edit</button>
@@ -287,11 +312,11 @@ class TaskList extends React.Component {
               })}
             </tbody>
           </table>
-          <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm} style={{marginLeft: '970px'}}>New Task</button>
+          <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm} style={{ marginLeft: '970px' }}>New Task</button>
           <div className="pagination">
             {this.renderPagination()}
           </div>
-          
+
         </form>
       </div>
     );

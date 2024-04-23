@@ -98,10 +98,16 @@ class Search extends React.Component {
           </div>
         </div>
         <div className="task-field">
-          <div className="task-label">Expiry Date:</div>
-          <div className="task-value">{task.expiryDate}</div>
+          <div className="task-label">Start Date:</div>
+          <div className="task-value">{task.startDate}</div>
         </div>
-        <div className="task-task">{task.status === 3 ? 'Task đã hoàn thành' : task.status === 2 && task.expiryDate >= currentDate ? 'Task đang thực hiện' : task.status === 1 && task.expiryDate >= currentDate ? 'Task chưa bắt đầu' : 'Task trễ hạn'}</div>
+        <div className="task-field">
+          <div className="task-label">End Date:</div>
+          <div className="task-value">{task.endDate}</div>
+        </div>
+        <div className="task-task">{task.status === 3 ? 'Task đã hoàn thành' :
+          task.status === 2 && task.endDate >= currentDate ? 'Task đang thực hiện' :
+            task.status === 1 && task.startDate >= currentDate ? 'Task chưa bắt đầu' : 'Task trễ hạn'}</div>
       </div>
     )
   }
