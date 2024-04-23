@@ -3,23 +3,29 @@ import { taskData } from '../mocks/taskData'
 import { v4 as uuidv4 } from 'uuid';
 
 class TaskList extends React.Component {
+  // Khởi tạo 
   constructor(props) {
     super(props);
 
     this.state = {
+      // Danh sách Task
       tasks: taskData,
+      // Thông tin task mới
       newTask: {
         id: '',
         title: '',
         description: '',
-        status: 1,
+        status: 1, // Mặc định tạo mới là 'Open'
         startDate: '',
         endDate: ''
       },
       editingTask: null,
       showForm: false,
+      // Filter theo status, mặc định hiển thị all status
       filterStatus: 'all',
+      // Trang hiển thị lúc khởi tạo
       currentPage: 1,
+      // Số lượng task trên mỗi trang
       tasksPerPage: 5
     };
     this.handleDelete = this.handleDelete.bind(this);
@@ -27,26 +33,27 @@ class TaskList extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
+    this.handleToggleForm = this.handleToggleForm.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
-
-  toggleForm() {
+  // Hiển thị form thêm mới
+  handleToggleForm() {
     this.setState(prevState => ({
       showForm: !prevState.showForm
     }));
   }
 
+  // Xóa task
   handleDelete(id) {
     let data = [...this.state.tasks].filter(item => item.id !== id);
     this.setState({
       tasks: data
     })
-
   }
 
+  // Thêm mới task
   handleAdd(event) {
     event.preventDefault();
     const newTask = {
@@ -67,12 +74,14 @@ class TaskList extends React.Component {
     }));
   }
 
+  // Chỉnh sửa task
   handleEdit(task) {
     this.setState({
       editingTask: task
     });
   }
 
+  // Xử lý thay đổi value tại input form
   handleInputChange(event) {
     const { name, value } = event.target;
     if (this.state.editingTask) {
@@ -92,6 +101,7 @@ class TaskList extends React.Component {
     }
   }
 
+  // Lưu thay đổi của task
   handleFormSubmit(event) {
     event.preventDefault();
     if (this.state.editingTask) {
@@ -109,16 +119,19 @@ class TaskList extends React.Component {
     }
   }
 
+  // Filter task theo status
   handleFilterChange(filterStatus) {
     this.setState({
       filterStatus: filterStatus
     });
   }
 
+  // Xử lý chuyển trang
   handlePageChange(page) {
     this.setState({ currentPage: page });
   }
 
+  // Hiển thị phân trang
   renderPagination() {
     const { filterStatus, currentPage, tasksPerPage } = this.state;
     const filteredTasks = this.state.tasks.filter(task => {
@@ -153,6 +166,7 @@ class TaskList extends React.Component {
     );
   }
 
+  // Hiển thị danh sách task
   render() {
     const { filterStatus, currentPage, tasksPerPage } = this.state;
     const filteredTasks = this.state.tasks.filter(task => {
@@ -218,7 +232,7 @@ class TaskList extends React.Component {
               </div>
             </div>
             <button type="submit" className="btn btn-primary">Add Task</button>
-            <button type="button" className="btn btn-secondary" onClick={this.toggleForm}>Cancel</button>
+            <button type="button" className="btn btn-secondary" onClick={this.handleToggleForm}>Cancel</button>
           </form>
         )}
         <form onSubmit={this.handleFormSubmit}>
@@ -312,7 +326,7 @@ class TaskList extends React.Component {
               })}
             </tbody>
           </table>
-          <button type="button" class="btn btn-outline-primary" onClick={this.toggleForm} style={{ marginLeft: '970px' }}>New Task</button>
+          <button type="button" class="btn btn-outline-primary" onClick={this.handleToggleForm} style={{ marginLeft: '970px' }}>New Task</button>
           <div className="pagination">
             {this.renderPagination()}
           </div>

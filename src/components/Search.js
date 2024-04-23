@@ -1,6 +1,8 @@
 import React from 'react';
 import { filter, includes, orderBy as funcOrderBy, remove, reject, isDate } from 'lodash';
 import { taskData } from '../mocks/taskData';
+
+// Lấy ngày hiện tại
 const currentDate = new Date().toISOString().split('T')[0];
 
 class Search extends React.Component {
@@ -11,11 +13,14 @@ class Search extends React.Component {
       tasks: taskData,
       searchTasks: taskData,
       task: {},
+      // Trang hiển thị lúc khởi tạo
       currentPage: 1,
-      tasksPerPage: 5 // Số lượng phần tử trên mỗi trang
+      // Số lượng phần tử trên mỗi trang
+      tasksPerPage: 5
     };
   }
 
+  // Xử lý thay đổi giá trị của ô input tìm kiếm
   onChange = (e) => {
     this.setState({
       searchTasks: this.state.tasks.filter(item =>
@@ -26,10 +31,12 @@ class Search extends React.Component {
     });
   }
 
+  // Xử lý show chi tiết task
   showDetail = (item) => {
     this.setState({ task: item });
   }
 
+  // Xử lý render danh sách các task
   renderItems = () => {
     const { searchTasks, currentPage, tasksPerPage } = this.state;
     const indexOfLastTask = currentPage * tasksPerPage;
@@ -48,15 +55,15 @@ class Search extends React.Component {
     ));
   }
 
-  // Phương thức để chuyển đến trang khác
+  // Xử lý chuyển trang
   handlePageChange = (pageNumber) => {
     this.setState({ currentPage: pageNumber });
   }
 
+  // Hiển thị phân trang
   renderPagination = () => {
     const { searchTasks, tasksPerPage } = this.state;
     const pageNumbers = Math.ceil(searchTasks.length / tasksPerPage);
-
     return (
       <nav>
         <ul className="pagination">
@@ -78,6 +85,7 @@ class Search extends React.Component {
     );
   }
 
+  // Xử lý render chi tiết của task
   renderDetail() {
     const { task } = this.state;
     return (
@@ -112,6 +120,7 @@ class Search extends React.Component {
     )
   }
 
+  // Xử lý hiển thị UI
   render() {
     return (
       <div>
